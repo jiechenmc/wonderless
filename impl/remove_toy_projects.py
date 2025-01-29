@@ -6,25 +6,35 @@ import shutil
 
 
 # get meta-deta of repositories
-def get_topics(urls):
+def get_stars(urls):
     with open(urls, newline='') as csvfile:
         reader = csv.reader(csvfile)
         next(reader, None)
         for row in reader:
             url = row[0].rstrip()
+
+
             new_url = url.replace('github.com', 'api.github.com/repos')
+
+
+            print(new_url)
+
             # add your github token to Bearer
             user_data = requests.get(new_url,
-                                     headers={'Authorization': 'Bearer your_token',
+                                     headers={'Authorization': f'Bearer {os.getenv("TOKEN")}',
                                               'Accept': 'application/vnd.github.mercy-preview+json'}).json()
-            file_path = 'topics/' + new_url.split('/')[-2] + "_" + new_url.split('/')[-1] + '.json'
-            with open(file_path, 'w', encoding='utf-8') as outfile:
-                json.dump(user_data, outfile, ensure_ascii=False, indent=4)
+                                              
+            if (user_data["stargazers_count"] >= 100):
+                with open("out.txt", "a+") as outfile:
+                    outfile.write(f"{user_data["name"]},{user_data["html_url"]}\n")
+
+                # with open(file_path, 'w+', encoding='utf-8') as outfile:
+                #     json.dump(user_data, outfile, ensure_ascii=False, indent=4)
 
 
 # check if specific keywords are in the topics, description, or label of the repositories
 def filter_toys():
-    parent_dir = '/Users/nafise/serverless/helpers/topics/'
+    parent_dir = './helpers/topics/'
     keywords = ['example', 'demo', 'tutorial', 'playground', 'learn', 'teach', 'exercise', 'course', 'practice',
                 'template', 'sample', 'workshop', 'lecture', 'study']
     remove_ids = set()
@@ -56,7 +66,7 @@ def filter_toys():
 
 # remove projects by id
 def remove_toy_projects(project_ids):
-    parent_dir = '/storage/nfs/nafise/filtered_repos/'
+    parent_dir = './filtered_repos/'
     with open(project_ids, 'r') as file:
         rows = csv.reader(file)
         next(rows, None)
@@ -69,6 +79,6 @@ def remove_toy_projects(project_ids):
 # ----------------------------- MAIN --------------------------------------
 
 
-get_topics('urls.csv')
+get_stars('project_urls.csv')
 filter_toys()
 remove_toy_projects('remove_ids.csv')

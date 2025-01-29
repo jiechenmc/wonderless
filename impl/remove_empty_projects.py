@@ -7,7 +7,7 @@ import csv
 # walk through the directories to read configuration files and extract the name of provider and number of functions
 def read_files(output):
     # set the path to the directory where repositories are saved
-    parent_dir = '/storage/nfs/nafise/filtered_repos/'
+    parent_dir = './filtered_repos/'
     provider = []
     functions = []
     for x in os.listdir(parent_dir):
@@ -111,7 +111,7 @@ def get_empty_projects(projects, filtered_files, filtered_out_files):
 
 # remove projects by id
 def remove_empty_projects(project_ids):
-    parent_dir = '/storage/nfs/nafise/filtered_repos/'
+    parent_dir = './filtered_repos/'
     with open(project_ids, 'r') as file:
         rows = csv.reader(file)
         next(rows, None)

@@ -11,7 +11,7 @@ def make_project_url(file_urls, project_urls):
         reader = csv.reader(csvfile)
         next(reader, None)
         for row in reader:
-            wtr.writerow([row[1].split('/blob')[0]])
+            wtr.writerow([row[0].split('/blob')[0]])
 
 
 # remove the duplications
@@ -29,7 +29,7 @@ def remove_duplications(project_urls, no_duplication_urls):
 # clone the tmaster branch of projects
 def clone_projects(project_urls):
     # set the directory in which you want to store the projects
-    directory = '/storage/nfs/nafise/repositories/'
+    directory = './repositories/'
     with open(project_urls, newline='') as csvfile:
         reader = csv.reader(csvfile)
         next(reader, None)

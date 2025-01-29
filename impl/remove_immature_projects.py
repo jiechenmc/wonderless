@@ -8,12 +8,12 @@ import shutil
 
 # get the git commit history of each repository
 def get_git_commits():
-    parent_dir = '/storage/nfs/nafise/filtered_repos/'
+    parent_dir = './filtered_repos/'
     for x in os.listdir(parent_dir):
         repo_path = parent_dir + x
         if os.path.isdir(repo_path):
             os.chdir(repo_path)
-            command = 'git log --date=short --pretty=format:"%h%x09%an%x09%cd%x09%s">/storage/nfs/nafise/git_commits/' \
+            command = 'git log --date=short --pretty=format:"%h%x09%an%x09%cd%x09%s">./git_commits/' \
                       + x + '_git_commits.csv'
             subprocess.call(command, shell=True)
 
@@ -21,7 +21,7 @@ def get_git_commits():
 # get the lifetime of each project(difference between last commit and first commit)
 def get_lifetime(result):
     csv.field_size_limit(sys.maxsize)
-    parent_dir = '/storage/nfs/nafise/git_commits/'
+    parent_dir = './git_commits/'
     for x in os.listdir(parent_dir):
         # skip hidden files
         if x.startswith('.'):
@@ -63,7 +63,7 @@ def get_immature_projects(git_commits, remove_ids):
 
 # remove projects by id
 def remove_immature_projects(project_ids):
-    parent_dir = '/storage/nfs/nafise/filtered_repos/'
+    parent_dir = './filtered_repos/'
     with open(project_ids, 'r') as file:
         rows = csv.reader(file)
         next(rows, None)

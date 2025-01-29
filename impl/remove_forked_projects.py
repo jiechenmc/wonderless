@@ -4,7 +4,7 @@ import os
 
 # get the id of all the repositories
 def get_project_ids():
-    parent_dir = '/storage/nfs/nafise/filtered_repos'
+    parent_dir = './filtered_repos'
     wtr = csv.writer(open('project_ids.csv', 'w'), delimiter=',', lineterminator='\n')
     for x in os.listdir(parent_dir):
         if x.startswith('.'):

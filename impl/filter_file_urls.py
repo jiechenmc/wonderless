@@ -29,7 +29,7 @@ def filter_urls(file_urls, filtered_file_urls):
         for row in reader:
             if any(c in row[1].lower() for c in remove):
                 continue
-            elif not row[1].rstrip().endswith('serverless.yml'):
+            elif not row[1].rstrip().endswith('Chart.yaml'):
                 continue
             else:
                 wtr.writerow([row[1]])
@@ -37,5 +37,5 @@ def filter_urls(file_urls, filtered_file_urls):
 # ----------------------------- MAIN --------------------------------------
 
 
-txt_to_csv('result-2020-07-29.txt', 'file_url.csv')
+txt_to_csv('result-2025-01-28.txt', 'file_url.csv')
 filter_urls('file_url.csv', 'file_urls.csv')
