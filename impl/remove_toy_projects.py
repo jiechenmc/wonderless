@@ -20,10 +20,11 @@ def get_stars(urls):
             print(new_url)
 
             # add your github token to Bearer
+
             user_data = requests.get(new_url,
                                      headers={'Authorization': f'Bearer {os.getenv("TOKEN")}',
                                               'Accept': 'application/vnd.github.mercy-preview+json'}).json()
-                                              
+
             if (user_data["stargazers_count"] >= 100):
                 with open("out.txt", "a+") as outfile:
                     outfile.write(f"{user_data["name"]},{user_data["html_url"]}\n")
@@ -80,5 +81,5 @@ def remove_toy_projects(project_ids):
 
 
 get_stars('project_urls.csv')
-filter_toys()
-remove_toy_projects('remove_ids.csv')
+# filter_toys()
+# remove_toy_projects('remove_ids.csv')
